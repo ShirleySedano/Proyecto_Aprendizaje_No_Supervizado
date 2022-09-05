@@ -46,6 +46,14 @@ En este trabajo el objetivo es utilizar métodos de minería de texto y agrupami
 
 https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/An%C3%A1lisis%20descriptivo%20y%20NLP
 
+#### Cantidad de palabras por mensaje
+
+![Imagen 1. Cantidad de palabras por mensaje (sin preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188343812-be2688ad-b638-4b3f-98e9-740583d1d464.png)
+
+![Imagen 2. Cantidad de palabras por mensaje (con preprocesamiento)](https://user-images.githubusercontent.com/102918996/188343877-d82c4d0f-469f-4ef4-9be2-6e312d5fcc82.png)
+
+En esta comparativa se observa que la mayoría de los mensajes conserva su densidad de palabras aún después del preprocesamiento, salvo para un pequeño grupo para el cual se reduce significativamente su cantidad de palabras a menos de mil. 
+
 ### Propuesta metodológica:
 
 Para el componente de Procesamiento de lenguaje natural se hará uso de técnicas de limpieza de datos, eliminando palabras utilizadas normalmente por las personas, pero que no agregan significado a la queja, como lo son los conectores, nombres propios, número de identificación, entre otros. Luego de esta limpieza se realizará el proceso de tokenización de las quejas con diccionarios especializados disponibles en el idioma español, que permita agrupar palabras con raíces similares, o grupos de palabra que por sí solas no tienen significado, pero con el uso en conjunto con otra palabra sí, todo esto con el fin de reducir la cantidad de palabras que se convertirán en variables del modelo de clustering. 

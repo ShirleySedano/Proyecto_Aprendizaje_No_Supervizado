@@ -54,9 +54,31 @@ https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/A
 
 En esta comparativa se observa que la mayoría de los mensajes conserva su densidad de palabras aún después del preprocesamiento, salvo para un pequeño grupo para el cual se reduce significativamente su cantidad de palabras a menos de mil. 
 
-#### Palabras que más se repiten. 
+#### Palabras que más se repiten
 
+![Imagen 3. Palabras que más se repiten en mensaje (sin preprocesamiento)](https://user-images.githubusercontent.com/102918996/188344426-ffc5b56e-97a7-4fc1-867d-4d9cfe2a6a0b.png)
 
+![Imagen 4. Palabras que más se repiten en mensaje (con preprocesamiento)](https://user-images.githubusercontent.com/102918996/188344557-17c94d66-b199-4206-b91f-a908fb072a4f.png)
+
+En esta comparativa hay varios aspectos relevantes a destacar: se observa el ruido que hacen los stopwords sobre la data, el incremento en la frecuencia de algunas palabras como resultado del proceso de lematización, y que hay mensajes en otros idiomas diferentes al español que habrá que manejar. 
+
+#### Named Entity Recognition (NER)
+
+![Imagen 5. Aplicación de NER (sin preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188344704-9c7d5ea1-5037-4d05-b1aa-276e80811c57.png)
+
+![Imagen 6. Aplicación de NER (con preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188344784-7dd1cf27-f1af-4367-9e4d-5d14bcfd7316.png)
+
+Al hacer el análisis de reconocimiento de entidades vemos que al principio prima la información geográfica por sobre el resto. Luego del preprocesamiento se logran identificar más personas. Asimismo, es destacable que la información miscelánea también crece.
+
+#### Part of Speech (POS)
+
+![Imagen 7. Aplicación de POS (sin preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188344999-f29a0614-ba9b-4cc1-b1ab-06a55c5cd767.png)
+
+![Imagen 8. Aplicación de POS (sin preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188345096-46a8f797-a7b0-420c-bed8-6f4b63188c86.png)
+
+En el análisis POS vemos que antes del preprocesamiento la información es bastante variada, gramaticalmente hablando; sin embargo, luego de procesar la base, la información se concentra en nombres, nombres propios, verbos y adjetivos. 
+
+Adicional a los análisis anteriores, se realizaron otros que no se colocaron en el documento por restricciones de espacio. Se realizaron los análisis: cantidad de caracteres por mensaje, tamaño promedio de palabra, bigramas y trigramas que más se repiten
 
 ### Propuesta metodológica:
 

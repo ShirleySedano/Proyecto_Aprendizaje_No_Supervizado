@@ -44,7 +44,7 @@ En este trabajo el objetivo es utilizar métodos de minería de texto y agrupami
 
 ### Descripción de los datos:
 
-https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/An%C3%A1lisis%20descriptivo%20y%20NLP
+A continuación se presenta una sintesis del procesamiento de lenguaje natural realizado y sus estadísticas descriptivas. Los detalles se pueden encontrar en el siguiente [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/An%C3%A1lisis%20descriptivo%20y%20NLP)
 
 #### Cantidad de palabras por mensaje
 

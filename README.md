@@ -44,6 +44,8 @@ En este trabajo el objetivo es utilizar métodos de minería de texto y agrupami
 
 ### Descripción de los datos:
 
+Antes de iniciar la descripción de los datos es importante aclarar que no se subirán en este repositorio los datos originales por cuestiones de confidencialidad
+
 A continuación se presenta una sintesis del procesamiento de lenguaje natural realizado y sus estadísticas descriptivas. Los detalles se pueden encontrar en el siguiente [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/An%C3%A1lisis%20descriptivo%20y%20NLP)
 
 #### Cantidad de palabras por mensaje
@@ -79,6 +81,8 @@ Al hacer el análisis de reconocimiento de entidades vemos que al principio prim
 En el análisis POS vemos que antes del preprocesamiento la información es bastante variada, gramaticalmente hablando; sin embargo, luego de procesar la base, la información se concentra en nombres, nombres propios, verbos y adjetivos. 
 
 Adicional a los análisis anteriores, se realizaron otros que no se colocaron en el documento por restricciones de espacio. Se realizaron los análisis: cantidad de caracteres por mensaje, tamaño promedio de palabra, bigramas y trigramas que más se repiten
+
+La matriz de quejas resultante despues de NLP es la [siguiente](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/MATRIZ_QUEJAS_TFIDF.zip)
 
 ### Propuesta metodológica:
 

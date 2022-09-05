@@ -44,8 +44,7 @@ En este trabajo el objetivo es utilizar métodos de minería de texto y agrupami
 
 ### Descripción de los datos:
 
-
-
+https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/An%C3%A1lisis%20descriptivo%20y%20NLP
 
 ### Propuesta metodológica:
 

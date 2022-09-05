@@ -1,0 +1,469 @@
+### 1. Estadísticas generales de la base de datos
+
+## Librerías
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+## Carga de datos
+csv_path = 'data_quejas.csv'
+df = pd.read_csv(csv_path, sep=';', low_memory=False)
+
+## Vistazo a los datos
+df.head(10)
+
+## Dimensiones originales de dataset
+df.shape
+
+## Variables de dataset
+df.info()
+
+## Vistazo general de datos faltantes
+sns.heatmap(df.isnull(), cbar=False)
+plt.show()
+
+## Eliminar registros con data faltante
+df = df.dropna()
+
+## Estadísticas descriptivas
+df.describe()
+
+## Inferir idioma de mensaje
+'''
+import fasttext
+pretrained_model = 'lid.176.bin'
+model = fasttext.load_model(pretrained_model)
+langs = []
+for sent in df['descripcion']:
+    lang = model.predict(sent)[0]
+    langs.append(str(lang)[11:13])
+df['langs'] = langs
+'''
+
+## 2. Análisis exploratorio de mensajes usando NLP
+
+## Número de caracteres
+df['descripcion'].str.len().hist()
+plt.xlabel('Cantidad de caracteres')
+plt.ylabel('Frecuencia')
+plt.title('Número de caracteres en base de datos')
+plt.show()
+
+## Número de palabras
+df['descripcion'].apply(lambda x: len(str(x).split())).hist()
+plt.xlabel('Cantidad de palabras')
+plt.ylabel('Frecuencia')
+plt.title('Número de palabras en base de datos')
+plt.show()
+
+## Tamaño promedio de palabra
+df['descripcion'].str.split().\
+   apply(lambda x: [len(i) for i in x]). \
+   map(lambda x: np.mean(x)).hist()
+plt.xlabel('Tamaño promedio de palabra')
+plt.ylabel('Frecuencia')
+plt.title('Tamaño promedio de palabra en base de datos')
+plt.show()
+
+## Stopwords
+import nltk
+from nltk.corpus import stopwords
+stop=set(stopwords.words('spanish'))
+
+corpus=[]
+new=df['descripcion'].str.split()
+new=new.values.tolist()
+corpus=[word for i in new for word in i]
+
+from collections import defaultdict
+dic=defaultdict(int)
+for word in corpus:
+    if word in stop:
+        dic[word]+=1
+
+dic = dict(sorted(dic.items(), key=lambda x: x[1], reverse=True))
+sw = list(dic.keys())[:30]
+cnt = list(dic.values())[:30]
+
+plt.figure(figsize = (18, 6))
+plt.bar(sw, cnt, width = 0.8)
+plt.xlabel('Stopwords')
+plt.ylabel('Frecuencia')
+plt.title('Stopwords en base de datos')
+plt.xticks(rotation=45)
+plt.show()
+
+## Palabras que más se repiten
+from collections import Counter
+
+counter=Counter(corpus)
+most=counter.most_common()
+
+x, y= [], []
+for word,count in most[:50]:
+    if (word not in stop):
+        x.append(word)
+        y.append(count)
+
+plt.figure(figsize = (8, 10))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Palabras que más se repiten')
+plt.show()
+
+## Top n-gramas (n=2)
+from nltk.util import ngrams
+from sklearn.feature_extraction.text import CountVectorizer
+
+def get_top_ngram(corpus, n=None):
+    vec = CountVectorizer(ngram_range=(n, n)).fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) 
+                  for word, idx in vec.vocabulary_.items()]
+    words_freq =sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:10]
+
+top_n_bigrams=get_top_ngram(df['descripcion'],2)[:50]
+x,y=map(list,zip(*top_n_bigrams))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Bigramas que más se repiten')
+plt.show()
+
+## Top n-gramas (n=3)
+top_n_bigrams=get_top_ngram(df['descripcion'],3)[:50]
+x,y=map(list,zip(*top_n_bigrams))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Trigramas que más se repiten')
+plt.show()
+
+## Name Entity Recognition (NER)
+import spacy
+
+nlp = spacy.load('es_core_news_md')
+
+def ner(text):
+    doc=nlp(text)
+    return [X.label_ for X in doc.ents]
+
+ent=df['descripcion'].apply(lambda x: ner(x))
+ent=[x for sub in ent for x in sub]
+counter=Counter(ent)
+count=counter.most_common()
+x,y=map(list,zip(*count))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('NER')
+plt.title('Name Entity Recognition (NER)')
+plt.show()
+
+## Mostrar elementos NER
+import warnings
+warnings.filterwarnings('ignore')
+
+def ner(text, ent):
+    doc=nlp(text)
+    return [X.text for X in doc.ents if X.label_ == ent]
+
+gpe=df['descripcion'].apply(lambda x: ner(x, 'LOC'))
+gpe=[i for x in gpe for i in x]
+counter=Counter(gpe)
+
+x,y=map(list,zip(*counter.most_common(50)))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('NER')
+plt.title('Name Entity Recognition (NER)')
+plt.show()
+
+## Parts of Speech (POS)
+import spacy
+
+nlp = spacy.load('es_core_news_md')
+
+def pos(text):
+    doc=nlp(text)
+    return [X.pos_ for X in doc]
+
+ent=df['descripcion'].apply(lambda x: pos(x))
+ent=[x for sub in ent for x in sub]
+counter=Counter(ent)
+count=counter.most_common()
+x,y=map(list,zip(*count))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('POS')
+plt.title('Parts of Speech (POS)')
+plt.show()
+
+## Mostrar elementos POS
+import warnings
+warnings.filterwarnings('ignore')
+
+def pos(text, ent):
+    doc=nlp(text)
+    return [X.text for X in doc if X.pos_ == ent]
+
+gpe=df['descripcion'].apply(lambda x: pos(x, 'NOUN'))
+gpe=[i for x in gpe for i in x]
+counter=Counter(gpe)
+
+x,y=map(list,zip(*counter.most_common(50)))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('POS')
+plt.title('Parts of Speech (POS)')
+plt.show()
+
+## 3. Preprocesamiento de datos
+
+## Tokenización
+from nltk.tokenize import word_tokenize
+df['tkn'] = df['descripcion'].apply(word_tokenize)
+df['tkn'].head()
+
+## Convertir a minúsculas
+df['lwr'] = df['tkn'].apply(lambda x: [word.lower() for word in x])
+df['lwr'].head()
+
+## Eliminar signos de puntuación
+import string
+punc = string.punctuation
+df['no_pnc'] = df['lwr'].apply(lambda x: [word for word in x if word not in punc])
+df['no_pnc'].head()
+
+## Eliminar stopwords
+df['stopwords'] = df['no_pnc'].apply(lambda x: [word for word in x if word not in stop])
+df['stopwords'].head()
+
+## Lematización
+import spacy
+
+nlp = spacy.load('es_core_news_md')
+
+def lemma(text):
+    doc=nlp(text)
+    return " ".join([X.lemma_ for X in doc]).split()
+
+df['stopwords_str'] = df['stopwords'].apply(lambda x: ','.join(map(str, x))).apply(lambda x: x.replace(',', ' '))
+df['lemma'] = df['stopwords_str'].apply(lambda x: lemma(x))
+df['lemma'].head()
+
+## Convertir de lista a cadena para mantener visualizaciones antes de preprocesamiento
+df['lemma_str'] = df['lemma'].apply(lambda x: ','.join(map(str, x))).apply(lambda x: x.replace(',', ' '))
+df['lemma_str'].head()
+
+## Feature engineering a través de TF-IDF
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf_vectorizer = TfidfVectorizer(max_df=0.90, min_df=25, max_features=5000, use_idf=True)
+tfidf = tfidf_vectorizer.fit_transform(df['lemma_str'])
+tfidf_feature_names = tfidf_vectorizer.get_feature_names()
+doc_term_matrix_tfidf = pd.DataFrame(tfidf.toarray(), columns=list(tfidf_feature_names))
+doc_term_matrix_tfidf.head()
+
+## Excluir features con ID numérico
+doc_term_matrix_tfidf=doc_term_matrix_tfidf.iloc[:,list(~doc_term_matrix_tfidf.columns.str.isdigit())]
+doc_term_matrix_tfidf.head()
+
+## Exportar listado de features
+pd.DataFrame(doc_term_matrix_tfidf.columns.tolist()).to_csv('listado_features.csv', index=False)
+
+## Número de caracteres
+df['lemma_str'].str.len().hist()
+plt.xlabel('Cantidad de caracteres')
+plt.ylabel('Frecuencia')
+plt.title('Número de caracteres en base de datos')
+plt.show()
+
+## Número de palabras
+df['lemma_str'].apply(lambda x: len(str(x).split())).hist()
+plt.xlabel('Cantidad de palabras')
+plt.ylabel('Frecuencia')
+plt.title('Número de palabras en base de datos')
+plt.show()
+
+## Tamaño promedio de palabra
+df['lemma_str'].str.split().\
+   apply(lambda x: [len(i) for i in x]). \
+   map(lambda x: np.mean(x)).hist()
+plt.xlabel('Tamaño promedio de palabra')
+plt.ylabel('Frecuencia')
+plt.title('Tamaño promedio de palabra en base de datos')
+plt.show()
+
+## Palabras que más se repiten
+from collections import Counter
+
+corpus=[]
+new=df['lemma_str'].str.split()
+new=new.values.tolist()
+corpus=[word for i in new for word in i]
+
+counter=Counter(corpus)
+most=counter.most_common()
+
+x, y = [], []
+for word,count in most[:50]:
+    if (word not in stop):
+        x.append(word)
+        y.append(count)
+
+plt.figure(figsize = (8, 10))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Palabras que más se repiten')
+plt.show()
+
+## Top n-gramas (n=2)
+from nltk.util import ngrams
+from sklearn.feature_extraction.text import CountVectorizer
+
+def get_top_ngram(corpus, n=None):
+    vec = CountVectorizer(ngram_range=(n, n)).fit(corpus)
+    bag_of_words = vec.transform(corpus)
+    sum_words = bag_of_words.sum(axis=0) 
+    words_freq = [(word, sum_words[0, idx]) 
+                  for word, idx in vec.vocabulary_.items()]
+    words_freq = sorted(words_freq, key = lambda x: x[1], reverse=True)
+    return words_freq[:10]
+
+top_n_bigrams=get_top_ngram(df['lemma_str'],2)[:50]
+x,y=map(list,zip(*top_n_bigrams))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Bigramas que más se repiten')
+plt.show()
+
+## Top n-gramas (n=3)
+top_n_bigrams=get_top_ngram(df['lemma_str'],3)[:50]
+x,y=map(list,zip(*top_n_bigrams))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('Palabras')
+plt.title('Trigramas que más se repiten')
+plt.show()
+
+## Name Entity Recognition (NER)
+import spacy
+
+nlp = spacy.load('es_core_news_md')
+
+def ner(text):
+    doc=nlp(text)
+    return [X.label_ for X in doc.ents]
+
+ent=df['lemma_str'].apply(lambda x: ner(x))
+ent=[x for sub in ent for x in sub]
+counter=Counter(ent)
+count=counter.most_common()
+x,y=map(list,zip(*count))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('NER')
+plt.title('Name Entity Recognition (NER)')
+plt.show()
+
+## Mostrar elementos NER
+import warnings
+warnings.filterwarnings('ignore')
+
+def ner(text, ent):
+    doc=nlp(text)
+    return [X.text for X in doc.ents if X.label_ == ent]
+
+gpe=df['lemma_str'].apply(lambda x: ner(x, 'LOC'))
+gpe=[i for x in gpe for i in x]
+counter=Counter(gpe)
+
+x,y=map(list,zip(*counter.most_common(50)))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('NER')
+plt.title('Name Entity Recognition (NER)')
+plt.show()
+
+## Parts of Speech (POS)
+import spacy
+
+nlp = spacy.load('es_core_news_md')
+
+def pos(text):
+    doc=nlp(text)
+    return [X.pos_ for X in doc]
+
+ent=df['lemma_str'].apply(lambda x: pos(x))
+ent=[x for sub in ent for x in sub]
+counter=Counter(ent)
+count=counter.most_common()
+x,y=map(list,zip(*count))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('POS')
+plt.title('Parts of Speech (POS)')
+plt.show()
+
+## Mostrar elementos POS
+import warnings
+warnings.filterwarnings('ignore')
+
+def pos(text, ent):
+    doc=nlp(text)
+    return [X.text for X in doc if X.pos_ == ent]
+
+gpe=df['lemma_str'].apply(lambda x: pos(x, 'ADJ'))
+gpe=[i for x in gpe for i in x]
+counter=Counter(gpe)
+
+x,y=map(list,zip(*counter.most_common(50)))
+
+plt.figure(figsize = (6, 8))
+plt.barh(x, y)
+plt.gca().invert_yaxis()
+plt.xlabel('Frecuencia')
+plt.ylabel('POS')
+plt.title('Parts of Speech (POS)')
+plt.show()

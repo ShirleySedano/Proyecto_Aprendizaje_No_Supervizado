@@ -95,4 +95,7 @@ Para el componente de clustering inicialmente se propone utilizar un modelo DBSC
 -Morde, V., 2022. Humanizing Customer Complaints with NLP Algorithms. [online] Linkedin.com. Available at: <https://www.linkedin.com/pulse/humanizing-customer-complaints-nlp-algorithms-vishal-morde/> [Accessed 1 September 2022].  
 
 -HASAN, S. (2018). Using Text Mining and Cluster Analysis to Improve Customers Complaints System (Doctoral dissertation, The British University in Dubai (BUiD)). 
+
+Para descargar el PDF dar click en el siguiente [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/PROPUESTA%20INICIAL_SEMANA%204_CALIFICABLE.pdf)
+
  

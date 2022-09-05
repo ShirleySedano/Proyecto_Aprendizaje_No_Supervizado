@@ -48,11 +48,15 @@ https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/A
 
 #### Cantidad de palabras por mensaje
 
-![Imagen 1. Cantidad de palabras por mensaje (sin preprocesamiento) ](https://user-images.githubusercontent.com/102918996/188343812-be2688ad-b638-4b3f-98e9-740583d1d464.png)
+![Imagen 1. Cantidad de palabras por mensaje (sin preprocesamiento](https://user-images.githubusercontent.com/102918996/188344129-48c5ae60-9e64-48f6-8f83-793434555c38.png)
 
 ![Imagen 2. Cantidad de palabras por mensaje (con preprocesamiento)](https://user-images.githubusercontent.com/102918996/188343877-d82c4d0f-469f-4ef4-9be2-6e312d5fcc82.png)
 
 En esta comparativa se observa que la mayoría de los mensajes conserva su densidad de palabras aún después del preprocesamiento, salvo para un pequeño grupo para el cual se reduce significativamente su cantidad de palabras a menos de mil. 
+
+#### Palabras que más se repiten. 
+
+
 
 ### Propuesta metodológica:
 

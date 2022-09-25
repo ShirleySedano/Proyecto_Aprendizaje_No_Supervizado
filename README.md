@@ -190,7 +190,7 @@ A pesar de que se sigue presentando superposición de clústeres, los grupos se 
 
 Vemos como existen palabras dominantes en cada clúster, sin embargo, en algunos de ellos no son palabras que permitan independizar el grupo de los demás, como es el caso del clúster 5 donde pasajero e indicar prevalecen. El clúster cero se caracteriza por las llamadas hechas por call center donde se crea el caso por daño en el equipaje, donde el cliente expresa ser compensado. El clúster 1 se caracteriza por inconformidad en las demoras y en los problemas operativos de las rutas. El clúster 2 lo conforman las quejas en el cual el cliente solicita información por equipaje perdido. El clúster 3 es en el que la palabra compensación prevalece, pero no es claro la temática de la queja, pero si el sentimiento de urgencia del cliente. El clúster 4 y el clúster 5 son los de mayor cantidad de elementos, donde maleta, equipaje, pasajero prevalecen, pero no es claro ni la temática ni el sentimiento. Los clústeres se pueden resumir en la siguiente tabla:
 
-![Tabla 2. Resumen de clústeres obtenidos usando K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192166965-5efb5e4b-c887-4254-a898-721c9d2f2200.png)
+![Tabla 2. Resumen de clústeres obtenidos usando K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192166965-5efb5e4b-c887-4254-a898-721c9d2f2200.png style=centerme)
 
 El análisis completo y detallado del paso a paso del análisis y sus resultados se pueden encontrar en el siguiente  [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/CODIGO%20PROYECTO%20FINAL.ipynb)
 

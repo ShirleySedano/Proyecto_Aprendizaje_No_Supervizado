@@ -211,4 +211,4 @@ Gavval, R., & Ravi, V. (2020). Clustering bank customer complaints on social med
 
 Van der Maaten, L., & Hinton, G. (2008). Visualizing data using t-SNE. Journal of machine learning research, 9(11).
 
-Para descargar el PDF dar click en el siguiente [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/PROPUESTA%20INICIAL_SEMANA%204_CALIFICABLE.pdf)
+Para descargar el PDF dar click en el siguiente [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/SEMANA%207%20PROYECTO%20FINAL%20TERMINADO.pdf)

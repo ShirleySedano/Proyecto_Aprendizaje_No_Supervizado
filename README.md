@@ -167,7 +167,7 @@ Resultados del algoritmo seleccionado.
 
 Para el algoritmo de K-medias se hizo uso del coeficiente de Silhouette con el fin de encontrar la cantidad de clústeres adecuados. Los resultados se pueden observar a continuación:
  
- ![Gráfica 1. Coeficiente de Silhouette](https://user-images.githubusercontent.com/102918996/192166823-f26ba5d8-885c-43f5-bb78-3d86e37bd915.png)
+![Gráfica 1. Coeficiente de Silhouette](https://user-images.githubusercontent.com/102918996/192167713-5687d776-579b-44fa-9104-a5978e5aaf7f.png)
 
 Podemos observar que el valor del índice no es muy variable para los primeros 40 clústeres, teniendo un máximo en 35. Para la primera iteración se utiliza esta cantidad de clústeres y se analiza el resultado. Para el análisis de resultado se utilizará la técnica de reducción de dimensionalidad y visualización t-SNE propuesta por Van der Maaten y Hinton (2008), la cual se ajusta a problemas de alta dimensionalidad como es este caso, embebiendo los datos en un espacio de dos o tres dimensiones para su visualización, donde elementos con alta probabilidad de ser similares se modelan como puntos cercanos, y elementos con baja probabilidad de ser similares se modelan como puntos lejanos. 
 
@@ -177,20 +177,15 @@ Ahora bien, haciendo uso de K-medias con 35 clústeres, el resultado se muestra 
 
 Debido a este resultado, y a la complejidad de análisis de 35 clústeres, se decide iterar mediante ensayo y error disminuyendo la cantidad de clústeres hasta encontrar una solución satisfactoria, que pueda clasificar la nube central, pero que nos permita identificar esos pequeños grupos de las periferias. Dicho número de clústeres propuesto es 6. Con 6 clústeres y volviendo a usar la técnica t-SNE, podemos ver el resultado final en la gráfica 4.
 
-![Gráfica 2. t-SNE sobre datos sin agrupar](https://user-images.githubusercontent.com/102918996/192166855-243dc114-27e4-4a74-968c-408ebc7013bc.png)
-
-![Gráfica 3. t-SNE con K-Medias (k=35)](https://user-images.githubusercontent.com/102918996/192166867-d56c1354-367b-479a-ad98-3f8d27b4ba09.png)
-
-![Gráfica 4. t-SNE con K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192166875-3c463ef8-6c16-4b48-a13b-6797a13f7167.png)
- 	 	
+![image](https://user-images.githubusercontent.com/102918996/192167694-c54f1ec4-690e-4e41-8e38-fb17603f59e0.png) 	 	
 
 A pesar de que se sigue presentando superposición de clústeres, los grupos se encuentran más definidos y los valores lejanos del clúster son menores, aunque presentes. Vemos como las periferias se encuentran clasificadas. Para entender que tipo de quejas se encuentran en cada clúster, se hace uso de nubes de palabras que permita visualizar las palabras con mayor frecuencia dentro del clúster:
 
-![Gráfica 5. Comparativo de clústeres obtenidos a través de nubes de palabras](https://user-images.githubusercontent.com/102918996/192166889-dfc4480e-f369-4945-85f2-71a3774b4ba4.png)
+![Gráfica 5. Comparativo de clústeres obtenidos a través de nubes de palabras](https://user-images.githubusercontent.com/102918996/192167672-f5aa9faf-130c-44b2-83aa-9a003adfaee4.png)
 
 Vemos como existen palabras dominantes en cada clúster, sin embargo, en algunos de ellos no son palabras que permitan independizar el grupo de los demás, como es el caso del clúster 5 donde pasajero e indicar prevalecen. El clúster cero se caracteriza por las llamadas hechas por call center donde se crea el caso por daño en el equipaje, donde el cliente expresa ser compensado. El clúster 1 se caracteriza por inconformidad en las demoras y en los problemas operativos de las rutas. El clúster 2 lo conforman las quejas en el cual el cliente solicita información por equipaje perdido. El clúster 3 es en el que la palabra compensación prevalece, pero no es claro la temática de la queja, pero si el sentimiento de urgencia del cliente. El clúster 4 y el clúster 5 son los de mayor cantidad de elementos, donde maleta, equipaje, pasajero prevalecen, pero no es claro ni la temática ni el sentimiento. Los clústeres se pueden resumir en la siguiente tabla:
 
-![Tabla 2. Resumen de clústeres obtenidos usando K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192166965-5efb5e4b-c887-4254-a898-721c9d2f2200.png style=centerme)
+![Tabla 2. Resumen de clústeres obtenidos usando K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192167450-7a9a725e-6081-4f44-aa64-ce53cc5a85bc.png)
 
 El análisis completo y detallado del paso a paso del análisis y sus resultados se pueden encontrar en el siguiente  [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/CODIGO%20PROYECTO%20FINAL.ipynb)
 

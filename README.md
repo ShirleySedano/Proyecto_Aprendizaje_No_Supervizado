@@ -192,7 +192,7 @@ Vemos como existen palabras dominantes en cada clúster, sin embargo, en algunos
 
 ![Tabla 2. Resumen de clústeres obtenidos usando K-Medias (k=6)](https://user-images.githubusercontent.com/102918996/192166965-5efb5e4b-c887-4254-a898-721c9d2f2200.png)
 
-El análisis completo y detallado del paso a paso del análisis y sus resultados se pueden encontrar en el siguiente link
+El análisis completo y detallado del paso a paso del análisis y sus resultados se pueden encontrar en el siguiente  [link](https://github.com/ShirleySedano/Proyecto_Aprendizaje_No_Supervizado/blob/main/CODIGO%20PROYECTO%20FINAL.ipynb)
 
 ### Conclusión:
 
